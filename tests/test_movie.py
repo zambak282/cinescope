@@ -9,20 +9,49 @@ NONEXISTENT_VALUE = -1
 
 class TestMovie:
     def test_get_movies_with_pagination_and_filters(self, api_manager):
-        response = api_manager.movies_api.get_movies(
-            params={
-                "genreId": 5,
-                "minPrice": 1,
-                "maxPrice": 1000,
-                "locations": ["MSK", "SPB"],
-                "published": True,
-                "createdAt": "asc",
-                "page": 1,
-                "pageSize": 10,
-            },
-        )
+        params = {
+            "genreId": 5,
+            "minPrice": 1,
+            "maxPrice": 1000,
+            "locations": ["MSK", "SPB"],
+            "published": True,
+            "createdAt": "asc",
+            "page": 2,
+            "pageSize": 5,
+        }
+
+        response = api_manager.movies_api.get_movies(params=params)
         assert response.status_code == 200, \
             f"expected 200, got {response.status_code}"
+
+        data = response.json()
+
+        for field in ("movies", "count", "page", "pageSize", "pageCount"):
+            assert field in data, \
+                f"no {field} in {list(data)}"
+
+        assert data["page"] == params["page"], \
+            f"expected {params['page']}, got {data['page']}"
+        assert data["pageSize"] == params["pageSize"], \
+            f"expected {params['pageSize']}, got {data['pageSize']}"
+
+        movies = data["movies"]
+        assert len(movies) == min(params["pageSize"], data["count"]), \
+            f"expected {params['pageSize']}, got {len(movies)}"
+
+        for movie in movies:
+            assert movie["genreId"] == params["genreId"], \
+                f"expected {params['genreId']}, got {movie['genreId']}"
+            assert params["minPrice"] <= movie["price"] <= params["maxPrice"], \
+                f"price is not between {params['minPrice']} and {params['maxPrice']}"
+            assert movie["location"] in params["locations"], \
+                f"location is not in {params['locations']}"
+            assert movie["published"] == params["published"], \
+                f"expected params['published'], got {movie['published']}"
+
+        dates = [m["createdAt"] for m in movies]
+        assert dates == sorted(dates), \
+            f"expected {sorted(dates)}, got {dates}"
 
     def test_get_movies_without_parameters(self, api_manager):
         response = api_manager.movies_api.get_movies()
@@ -34,20 +63,18 @@ class TestMovie:
         assert response.status_code == 400, \
             f"expected 400, got {response.status_code}"
 
-    def test_create_movie_with_correct_data_and_delete_them(self, super_admin_api_manager):
+    def test_create_movie_with_correct_data(self, super_admin_api_manager):
         payload = build_movie_payload()
-        create_response = super_admin_api_manager.movies_api.create_movie(movie_data=payload)
-        assert create_response.status_code == 201, \
-            f"expected 201, got {create_response.status_code}"
-        movie_id = create_response.json()["id"]
+        response = super_admin_api_manager.movies_api.create_movie(movie_data=payload)
+        assert response.status_code == 201, \
+            f"expected 201, got {response.status_code}"
+        data = response.json()
 
-        delete_response = super_admin_api_manager.movies_api.delete_movie(movie_id=movie_id)
-        assert delete_response.status_code == 200, \
-            f"expected 200, got {delete_response.status_code}"
+        for field in ("name", "price", "description", "imageUrl", "location", "published", "genreId"):
+            assert data[field] == payload[field], \
+                f"expected {field}, got {data[field]}"
 
-        get_response = super_admin_api_manager.movies_api.get_movie(movie_id=movie_id)
-        assert get_response.status_code == 404, \
-            f"expected 404, got {get_response.status_code}"
+        super_admin_api_manager.movies_api.delete_movie(movie_id=data["id"])
 
     def test_create_movie_with_nonexistent_parameter(self, super_admin_api_manager):
         payload = build_movie_payload()
@@ -85,6 +112,15 @@ class TestMovie:
         assert response.status_code == 404, \
             f"expected 404, got {response.status_code}"
 
+    def test_delete_movie_with_correct_data(self, super_admin_api_manager, created_movie):
+        response = super_admin_api_manager.movies_api.delete_movie(movie_id=created_movie["id"])
+        assert response.status_code == 200, \
+            f"expected 200, got {response.status_code}"
+
+        get_response = super_admin_api_manager.movies_api.get_movie(movie_id=created_movie["id"])
+        assert get_response.status_code == 404, \
+            f"expected 404, got {get_response.status_code}"
+
     def test_delete_movie_with_nonexistent_id(self, super_admin_api_manager):
         response = super_admin_api_manager.movies_api.delete_movie(movie_id=NONEXISTENT_VALUE)
         assert response.status_code == 404, \
@@ -93,9 +129,20 @@ class TestMovie:
     def test_update_movie_with_correct_data(self, super_admin_api_manager, created_movie):
         created_movie_id = created_movie["id"]
         new_movie_data = build_movie_payload()
-        response = super_admin_api_manager.movies_api.update_movie(movie_id=created_movie_id, movie_data=new_movie_data)
-        assert response.status_code == 200, \
-            f"expected 200, got {response.status_code}"
+        update_response = super_admin_api_manager.movies_api.update_movie(
+            movie_id=created_movie_id, movie_data=new_movie_data
+        )
+        assert update_response.status_code == 200, \
+            f"UPDATE: expected 200, got {update_response.status_code}"
+
+        get_response = super_admin_api_manager.movies_api.get_movie(movie_id=created_movie_id)
+        assert get_response.status_code == 200, \
+            f"GET: expected 200, got {get_response.status_code}"
+
+        get_response_data = get_response.json()
+        for field in ("name", "price", "description", "imageUrl", "location", "published", "genreId"):
+            assert get_response_data[field] == new_movie_data[field], \
+                f"expected {new_movie_data[field]}, got {get_response_data[field]}"
 
     @pytest.mark.xfail(reason="not working")
     def test_update_movie_with_nonexistent_parameter(self, super_admin_api_manager, created_movie):

@@ -36,10 +36,6 @@ def super_admin_api_manager(session_factory):
     api.auth_api.authenticate((SUPER_ADMIN_EMAIL, SUPER_ADMIN_PASSWORD))
     return api
 
-#pytest.fixture(scope="session")
-#def admin_api_manager(session_factory):
-#    return ApiManager(session=session_factory())
-
 @pytest.fixture(scope="function")
 def user_api_manager(session_factory, registered_user):
     api = ApiManager(session=session_factory())
