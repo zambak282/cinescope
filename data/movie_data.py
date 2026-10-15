@@ -1,4 +1,4 @@
-from utils.data_generator import generate_random_movie_name, generate_random_movie_description, generate_random_movie_price
+from utils.data_generator import DataGenerator
 
 
 def build_movie_payload(
@@ -13,10 +13,10 @@ def build_movie_payload(
         **kwargs,
 ) -> dict:
     payload = {
-        "name": name or generate_random_movie_name(),
+        "name": name or DataGenerator.generate_random_movie_name(),
         "imageUrl": image_url,
-        "price": price if price is not None else generate_random_movie_price(),
-        "description": description or generate_random_movie_description(),
+        "price": price if price is not None else DataGenerator.generate_random_movie_price(),
+        "description": description or DataGenerator.generate_random_movie_description(),
         "location": location,
         "published": published,
         "genreId": genre_id,
