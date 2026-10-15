@@ -1,0 +1,32 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_taken_name (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_taken_name (setup)[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUxLCJleHAiOjE3OTE5NTk4NTF9.oDjMfUYYvaTPjkB1dft9wWZIMll_25to1bCNhIGPwGI' \
+-H 'Content-Length: 226' \
+-d '{"name": "Try", "imageUrl": "https://image.url", "price": 260, "description": "Ago two material system. Analysis office our couple. Forget tend enter policy look treatment.", "location": "MSK", "published": true, "genreId": 5}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_taken_name[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUxLCJleHAiOjE3OTE5NTk4NTF9.oDjMfUYYvaTPjkB1dft9wWZIMll_25to1bCNhIGPwGI' \
+-H 'Content-Length: 298' \
+-d '{"name": "Try", "imageUrl": "https://image.url", "price": 832, "description": "Understand hair political point skill heart. Development task yes expert dog outside brother.\nWear hope response seem until. Front event point like cell seem watch.", "location": "MSK", "published": true, "genreId": 5}' 
+
+	RESPONSE:
+STATUS_CODE: [31m409[0m
+ELAPSED MS: [31m50.53[0m
+DATA: [31m{"message":"Фильм с таким названием уже существует","error":"Conflict","statusCode":409}[0m
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_taken_name (teardown)[0m
+curl -X DELETE 'https://api.dev-cinescope.f5qa.ru/movies/78163' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUxLCJleHAiOjE3OTE5NTk4NTF9.oDjMfUYYvaTPjkB1dft9wWZIMll_25to1bCNhIGPwGI' \
+-H 'Content-Length: 0' \

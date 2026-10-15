@@ -1,0 +1,11 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_get_movies_without_parameters (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_get_movies_without_parameters[0m
+curl -X GET 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDQ5LCJleHAiOjE3OTE5NTk4NDl9.fVaFvN7qNvESjnVYML8wagTakhbxaegE56y2uV5CpUo' \

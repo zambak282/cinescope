@@ -1,0 +1,11 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_get_movies_with_filter[minPrice and maxPrice filters] (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_get_movies_with_filter[minPrice and maxPrice filters][0m
+curl -X GET 'https://api.dev-cinescope.f5qa.ru/movies?minPrice=100&maxPrice=1000' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDQ1LCJleHAiOjE3OTE5NTk4NDV9.Nl-vd9wEJB3InXo1XYCIhMctIB1-sso_UtDWehC7OhU' \

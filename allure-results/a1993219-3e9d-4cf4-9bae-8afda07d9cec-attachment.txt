@@ -1,0 +1,18 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_nonexistent_parameter (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_nonexistent_parameter[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUwLCJleHAiOjE3OTE5NTk4NTB9.8ZHBmcMYgq5nr0YEl7ydY5Qleu-0qbA5bjIHf97p8LA' \
+-H 'Content-Length: 321' \
+-d '{"name": "Beautiful", "imageUrl": "https://image.url", "price": 544, "description": "Page national card minute miss rate. Off especially modern film before institution.\nEvidence system compare PM rise on speak. On especially senior wait.", "location": "MSK", "published": true, "genreId": 5, "nonexistent_parameter": ""}' 
+
+	RESPONSE:
+STATUS_CODE: [31m400[0m
+ELAPSED MS: [31m146.55[0m
+DATA: [31m{"message":"Некорректные данные","error":"Bad Request","statusCode":400}[0m

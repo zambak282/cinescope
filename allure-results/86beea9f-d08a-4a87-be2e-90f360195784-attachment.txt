@@ -1,0 +1,29 @@
+[32mpytest tests/db/test_movie_db.py::TestMovieDB::test_delete_movie (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/db/test_movie_db.py::TestMovieDB::test_delete_movie[0m
+curl -X GET 'https://api.dev-cinescope.f5qa.ru/movies/54' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU5LCJleHAiOjE3OTE5NTk4NTl9.Qe7pQmZYkDKBWRSI0-INhqtSCvsrk97M5XcgJlATogs' \
+
+[32mpytest tests/db/test_movie_db.py::TestMovieDB::test_delete_movie[0m
+curl -X DELETE 'https://api.dev-cinescope.f5qa.ru/movies/54' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU5LCJleHAiOjE3OTE5NTk4NTl9.Qe7pQmZYkDKBWRSI0-INhqtSCvsrk97M5XcgJlATogs' \
+-H 'Content-Length: 0' \
+
+[32mpytest tests/db/test_movie_db.py::TestMovieDB::test_delete_movie[0m
+curl -X GET 'https://api.dev-cinescope.f5qa.ru/movies/54' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU5LCJleHAiOjE3OTE5NTk4NTl9.Qe7pQmZYkDKBWRSI0-INhqtSCvsrk97M5XcgJlATogs' \
+
+	RESPONSE:
+STATUS_CODE: [31m404[0m
+ELAPSED MS: [31m41.25[0m
+DATA: [31m{"message":"Not Found","statusCode":404}[0m

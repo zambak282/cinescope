@@ -5,7 +5,7 @@ from models.user import CreateUserResponse, GetUserResponse
 pytestmark = pytest.mark.user
 
 
-class TestUser:
+class TestUserApi:
     def test_create_user(self, super_admin, common_user_data):
         create_response = super_admin.api.user_api.create_user(common_user_data)
         assert create_response.status_code == 201, \

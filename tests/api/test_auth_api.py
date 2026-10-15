@@ -5,7 +5,7 @@ from models.auth import RegisterUserResponse, LoginResponse
 pytestmark = pytest.mark.auth
 
 
-class TestAuth:
+class TestAuthApi:
     def test_register_user(self, unauthorized_user, generated_user_data):
         response = unauthorized_user.api.auth_api.register_user(generated_user_data)
         assert response.status_code == 201, \

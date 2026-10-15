@@ -1,85 +1,167 @@
+from typing import Any, Iterator
+
 import pytest
 import requests
+from sqlalchemy.orm import Session
 
 from clients.api_manager import ApiManager
-from data.movies.movie_data import build_movie_payload
-from utils.data_generator import generate_random_password, generate_random_email, generate_random_name
+from constants.roles import Roles
+from data.movie_data import build_movie_payload
+from data.user_data import build_register_user_payload
+from db_requester.db_client import get_db_session
+from db_requester.db_helpers import DBHelper
+from entities.user import User
+from resources.user_creds import SuperAdminCreds
+from utils.data_generator import DataGenerator
 
 
-SUPER_ADMIN_EMAIL = "api1@gmail.com"
-SUPER_ADMIN_PASSWORD = "asdqwe123Q"
+# ACTORS
+@pytest.fixture
+def user_session():
+    """
+    Фабрика изолированных сессий
+    :return: сессию пользователя ApiManager(session)
+    """
+    user_pool = []
+
+    def _create_user_session():
+        session = requests.Session()
+        user_session = ApiManager(session)
+        user_pool.append(user_session)
+        return user_session
+
+    yield _create_user_session
+
+    for user in user_pool:
+        user.close_session()
 
 
-# SESSIONS
-@pytest.fixture(scope="session")
-def session_factory():
-    sessions: list[requests.Session] = []
-    def _make() -> requests.Session:
-        s = requests.Session()
-        sessions.append(s)
-        return s
+@pytest.fixture
+def super_admin(user_session):
+    """
+    сессия пользователя с правами SUPER_ADMIN
+    :param user_session:
+    :return:
+    """
+    new_session = user_session()
 
-    yield _make
+    super_admin = User(
+        email=SuperAdminCreds.EMAIL,
+        password=SuperAdminCreds.PASSWORD,
+        roles=[Roles.SUPER_ADMIN.value],
+        api=new_session,
+    )
 
-    for s in sessions:
-        s.close()
+    super_admin.api.auth_api.authenticate(super_admin.creds)
+    return super_admin
 
 
-# MANAGERS
+@pytest.fixture
+def admin(user_session, super_admin, admin_data):
+    new_session = user_session()
+
+    response_data = super_admin.api.auth_api.create_user(admin_data).json()
+
+    admin = User(
+        user_id=response_data["id"],
+        email=admin_data["email"],
+        password=admin_data["password"],
+        roles=admin_data["roles"],
+        api=new_session,
+    )
+
+    admin.api.auth_api.authenticate(admin.creds)
+
+    yield admin
+
+    super_admin.api.user_api.delete_user(admin.id)
+
+
+@pytest.fixture
+def common_user(user_session, super_admin, common_user_data):
+    new_session = user_session()
+
+    response_data = super_admin.api.user_api.create_user(common_user_data).json()
+
+    common_user = User(
+        user_id=response_data["id"],
+        email=common_user_data["email"],
+        password=common_user_data["password"],
+        roles=common_user_data["roles"],
+        api=new_session,
+    )
+
+    common_user.api.auth_api.authenticate(common_user.creds)
+
+    yield common_user
+
+    super_admin.api.user_api.delete_user(common_user.id)
+
+
+@pytest.fixture
+def unauthorized_user(user_session):
+    new_session = user_session()
+
+    unauthorized_user = User(
+        email=None,
+        password=None,
+        roles=[],
+        api=new_session,
+    )
+
+    return unauthorized_user
+
+
 @pytest.fixture(scope="function")
-def api_manager(session_factory):
-    return ApiManager(session=session_factory())
-
-@pytest.fixture(scope="session")
-def super_admin_api_manager(session_factory):
-    api = ApiManager(session=session_factory())
-    api.auth_api.authenticate((SUPER_ADMIN_EMAIL, SUPER_ADMIN_PASSWORD))
-    return api
-
-@pytest.fixture(scope="function")
-def user_api_manager(session_factory, registered_user):
-    api = ApiManager(session=session_factory())
-    api.auth_api.authenticate((registered_user["email"], registered_user["password"]))
-    return api
-
-@pytest.fixture(scope="function")
-def unauthorized_api_manager(session_factory):
-    return ApiManager(session=session_factory())
-
-
-# USER
-@pytest.fixture(scope="function")
-def test_user_data():
-    password = generate_random_password()
-    return {
-        "email": generate_random_email(),
-        "fullName": generate_random_name(),
-        "password": password,
-        "passwordRepeat": password,
-        "roles": ["USER"]
-    }
+def admin_data() -> dict[str, Any]:
+    return build_register_user_payload(
+        verified = True,
+        banned = False,
+        roles = [Roles.ADMIN.value],
+    )
 
 
 @pytest.fixture(scope="function")
-def registered_user(session_factory, test_user_data, super_admin_api_manager):
-    api = ApiManager(session=session_factory())
-    response = api.auth_api.register_user(test_user_data)
-    assert response.status_code == 201, response.text
-    test_user_data["id"] = response.json()["id"]
+def common_user_data() -> dict[str, Any]:
+    return build_register_user_payload(
+        verified=True,
+        banned=False,
+        roles=[Roles.USER.value],
+    )
 
-    yield test_user_data
 
-    super_admin_api_manager.user_api.delete_user(test_user_data["id"])
+@pytest.fixture(scope="function")
+def generated_user_data() -> dict[str, Any]:
+    return build_register_user_payload()
 
 
 # FILM
 @pytest.fixture(scope="function")
-def created_movie(super_admin_api_manager):
+def created_movie(super_admin):
     payload = build_movie_payload()
-    response = super_admin_api_manager.movies_api.create_movie(payload)
+    response = super_admin.api.movies_api.create_movie(payload)
     assert response.status_code == 201, response.text
     movie = response.json()
 
     yield movie
 
-    super_admin_api_manager.movies_api.delete_movie(movie["id"])
+    super_admin.api.movies_api.delete_movie(movie["id"])
+
+
+@pytest.fixture(scope="module")
+def db_session() -> Iterator[Session]:
+    db_session = get_db_session()
+    yield db_session
+    db_session.close()
+
+@pytest.fixture(scope="function")
+def db_helper(db_session) -> DBHelper:
+    db_helper = DBHelper(db_session)
+    return db_helper
+
+@pytest.fixture(scope="function")
+def created_user(db_helper):
+    user = db_helper.create_user(DataGenerator.generate_user_data())
+    yield user
+    if db_helper.get_user_by_id(user.id):
+        db_helper.delete_user(user)

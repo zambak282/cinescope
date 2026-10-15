@@ -10,7 +10,7 @@ def build_movie_payload(
         location: str = "MSK",
         published: bool = True,
         genre_id: int = 5,
-        **kwargs,
+        **overrides,
 ) -> dict:
     payload = {
         "name": name or DataGenerator.generate_random_movie_name(),
@@ -21,5 +21,6 @@ def build_movie_payload(
         "published": published,
         "genreId": genre_id,
     }
-    payload.update(kwargs)
+    payload.update(overrides)
+
     return payload
