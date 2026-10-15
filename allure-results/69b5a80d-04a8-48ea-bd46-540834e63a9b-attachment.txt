@@ -1,0 +1,20 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_correct_data (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_correct_data[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUwLCJleHAiOjE3OTE5NTk4NTB9.8ZHBmcMYgq5nr0YEl7ydY5Qleu-0qbA5bjIHf97p8LA' \
+-H 'Content-Length: 318' \
+-d '{"name": "Clear history", "imageUrl": "https://image.url", "price": 497, "description": "Back character population few history relationship available. Natural research stop travel condition chance water. Old seem draw food us include. Each say current know dinner.", "location": "MSK", "published": true, "genreId": 5}' 
+
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_correct_data[0m
+curl -X DELETE 'https://api.dev-cinescope.f5qa.ru/movies/78162' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUwLCJleHAiOjE3OTE5NTk4NTB9.8ZHBmcMYgq5nr0YEl7ydY5Qleu-0qbA5bjIHf97p8LA' \
+-H 'Content-Length: 0' \

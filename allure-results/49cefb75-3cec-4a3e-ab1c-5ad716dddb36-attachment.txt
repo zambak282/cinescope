@@ -1,0 +1,36 @@
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_get_user_by_locator (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_get_user_by_locator[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/user' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU3LCJleHAiOjE3OTE5NTk4NTd9.ILiXytqvS36Zt4osMKrq84v2Txus99arDos2rd0Bmf8' \
+-H 'Cookie: refresh_token=69bd49e9-5b77-45c6-bfb6-acad5d812402' \
+-H 'Content-Length: 182' \
+-d '{"email": "1jasonjones@example.org", "fullName": "AmandaFlores", "password": "Krf@9IDqXo\"G", "passwordRepeat": "Krf@9IDqXo\"G", "roles": ["USER"], "verified": true, "banned": false}' 
+
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_get_user_by_locator[0m
+curl -X GET 'https://auth.dev-cinescope.f5qa.ru/user/b722dc51-6e9f-494e-bf50-34a177b51d56' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU3LCJleHAiOjE3OTE5NTk4NTd9.ILiXytqvS36Zt4osMKrq84v2Txus99arDos2rd0Bmf8' \
+-H 'Cookie: refresh_token=69bd49e9-5b77-45c6-bfb6-acad5d812402' \
+
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_get_user_by_locator[0m
+curl -X GET 'https://auth.dev-cinescope.f5qa.ru/user/1jasonjones@example.org' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU3LCJleHAiOjE3OTE5NTk4NTd9.ILiXytqvS36Zt4osMKrq84v2Txus99arDos2rd0Bmf8' \
+-H 'Cookie: refresh_token=69bd49e9-5b77-45c6-bfb6-acad5d812402' \
+
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_get_user_by_locator[0m
+curl -X DELETE 'https://auth.dev-cinescope.f5qa.ru/user/b722dc51-6e9f-494e-bf50-34a177b51d56' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU3LCJleHAiOjE3OTE5NTk4NTd9.ILiXytqvS36Zt4osMKrq84v2Txus99arDos2rd0Bmf8' \
+-H 'Cookie: refresh_token=69bd49e9-5b77-45c6-bfb6-acad5d812402' \
+-H 'Content-Length: 0' \

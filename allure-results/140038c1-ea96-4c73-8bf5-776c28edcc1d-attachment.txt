@@ -1,0 +1,18 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_id (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_id[0m
+curl -X PATCH 'https://api.dev-cinescope.f5qa.ru/movies/-1' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU2LCJleHAiOjE3OTE5NTk4NTZ9.k5eZRnAt75oJsNRgUMxaY6hHPMKbDl_IwqIt9vHvbhI' \
+-H 'Content-Length: 331' \
+-d '{"name": "Live blood", "imageUrl": "https://image.url", "price": 966, "description": "Experience least themselves add give game body. Listen who anything benefit.\nHalf ago lay investment relate performance determine natural. Positive current tough magazine whom cultural save.", "location": "MSK", "published": true, "genreId": 5}' 
+
+	RESPONSE:
+STATUS_CODE: [31m404[0m
+ELAPSED MS: [31m141.5[0m
+DATA: [31m{"message":"Фильм не найден","error":"Not Found","statusCode":404}[0m

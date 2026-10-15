@@ -1,0 +1,32 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_parameter (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_parameter (setup)[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU1LCJleHAiOjE3OTE5NTk4NTV9.wZE6B9fgCGAXfRnKN9qM9a-tUaOoIGbw3mcs7kU7JlQ' \
+-H 'Content-Length: 308' \
+-d '{"name": "Charge term claim", "imageUrl": "https://image.url", "price": 740, "description": "My only attention later might yard. Reach owner heart. You player whatever.\nTeach start heavy without education company where. Decade look nor fund best affect.", "location": "MSK", "published": true, "genreId": 5}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_parameter[0m
+curl -X PATCH 'https://api.dev-cinescope.f5qa.ru/movies/78167' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU1LCJleHAiOjE3OTE5NTk4NTV9.wZE6B9fgCGAXfRnKN9qM9a-tUaOoIGbw3mcs7kU7JlQ' \
+-H 'Content-Length: 282' \
+-d '{"name": "Loss employee beyond", "imageUrl": "https://image.url", "price": 682, "description": "Conference hand after either. Thousand pick often fine model. Should account nice behind specific data.", "location": "MSK", "published": true, "genreId": 5, "nonexistent_parameter": ""}' 
+
+	RESPONSE:
+STATUS_CODE: [31m404[0m
+ELAPSED MS: [31m48.67[0m
+DATA: [31m{"message":"Фильм не найден","error":"Not Found","statusCode":404}[0m
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_update_movie_with_nonexistent_parameter (teardown)[0m
+curl -X DELETE 'https://api.dev-cinescope.f5qa.ru/movies/78167' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU1LCJleHAiOjE3OTE5NTk4NTV9.wZE6B9fgCGAXfRnKN9qM9a-tUaOoIGbw3mcs7kU7JlQ' \
+-H 'Content-Length: 0' \

@@ -1,0 +1,22 @@
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_create_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_create_user[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/user' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU2LCJleHAiOjE3OTE5NTk4NTZ9.k5eZRnAt75oJsNRgUMxaY6hHPMKbDl_IwqIt9vHvbhI' \
+-H 'Cookie: refresh_token=8384d775-0dd2-4ea9-8f34-743e077021ff' \
+-H 'Content-Length: 181' \
+-d '{"email": "1andrew15@example.com", "fullName": "AshleyRodriguez", "password": "p{#w_82<eXx[", "passwordRepeat": "p{#w_82<eXx[", "roles": ["USER"], "verified": true, "banned": false}' 
+
+[32mpytest tests/api/test_user_api.py::TestUserApi::test_create_user[0m
+curl -X DELETE 'https://auth.dev-cinescope.f5qa.ru/user/d2d43207-8932-429e-ae06-d53fb6000c3a' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDU2LCJleHAiOjE3OTE5NTk4NTZ9.k5eZRnAt75oJsNRgUMxaY6hHPMKbDl_IwqIt9vHvbhI' \
+-H 'Cookie: refresh_token=8384d775-0dd2-4ea9-8f34-743e077021ff' \
+-H 'Content-Length: 0' \

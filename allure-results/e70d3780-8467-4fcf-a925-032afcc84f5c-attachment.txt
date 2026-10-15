@@ -1,0 +1,41 @@
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_only_user_role (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_only_user_role (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/user' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUxLCJleHAiOjE3OTE5NTk4NTF9.oDjMfUYYvaTPjkB1dft9wWZIMll_25to1bCNhIGPwGI' \
+-H 'Cookie: refresh_token=ef3b508c-4039-4a93-be1c-a380865765d8' \
+-H 'Content-Length: 181' \
+-d '{"email": "1pamelamiller@example.org", "fullName": "AnnMartin", "password": "Q0}+d3}Vo4\"2", "passwordRepeat": "Q0}+d3}Vo4\"2", "roles": ["USER"], "verified": true, "banned": false}' 
+
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_only_user_role (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 67' \
+-d '{"email": "1pamelamiller@example.org", "password": "Q0}+d3}Vo4\"2"}'
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_only_user_role[0m
+curl -X POST 'https://api.dev-cinescope.f5qa.ru/movies' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMxY2I0Mjg2LWJkOTEtNDBmNC05ZWFiLTA5OWIzZGUzY2ViZSIsImVtYWlsIjoiMXBhbWVsYW1pbGxlckBleGFtcGxlLm9yZyIsInJvbGVzIjpbIlVTRVIiXSwidmVyaWZpZWQiOnRydWUsImlhdCI6MTc5MTk1ODA1MiwiZXhwIjoxNzkxOTU5ODUyfQ.di6xkMdx42H8UXWl5F9fdopHFyn7V43Bl0R2ypWSopQ' \
+-H 'Content-Length: 315' \
+-d '{"name": "Finally small leave", "imageUrl": "https://image.url", "price": 567, "description": "Avoid turn suffer view. Level after use development fine kind heavy rich.\nRed response soon success rest we actually high. Mother draw result human admit country as.", "location": "MSK", "published": true, "genreId": 5}' 
+
+	RESPONSE:
+STATUS_CODE: [31m403[0m
+ELAPSED MS: [31m220.77[0m
+DATA: [31m{"message":"Forbidden resource","error":"Forbidden","statusCode":403}[0m
+[32mpytest tests/api/test_movie_api.py::TestMovieApi::test_create_movie_with_only_user_role (teardown)[0m
+curl -X DELETE 'https://auth.dev-cinescope.f5qa.ru/user/31cb4286-bd91-40f4-9eab-099b3de3cebe' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDUxLCJleHAiOjE3OTE5NTk4NTF9.oDjMfUYYvaTPjkB1dft9wWZIMll_25to1bCNhIGPwGI' \
+-H 'Cookie: refresh_token=ef3b508c-4039-4a93-be1c-a380865765d8' \
+-H 'Content-Length: 0' \

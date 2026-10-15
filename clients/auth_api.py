@@ -8,10 +8,10 @@ class AuthApi(CustomRequester):
         super().__init__(session=session, base_url=AUTH_BASE_URL)
 
     def authenticate(self, user_creds):
-        email, login = user_creds
+        email, password = user_creds
         login_data = {
             "email": email,
-            "password": login
+            "password": password
         }
         response = self.login_user(login_data).json()
         if "accessToken" not in response:

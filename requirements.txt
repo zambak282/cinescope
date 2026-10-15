@@ -1,3 +1,9 @@
 pytest
 requests
 faker
+python-dotenv
+pydantic
+pydantic-core
+psycopg
+sqlalchemy
+allure-python-commons

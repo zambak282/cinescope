@@ -1,0 +1,35 @@
+[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_login_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 53' \
+-d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}' 
+
+[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_login_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/user' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDQzLCJleHAiOjE3OTE5NTk4NDN9.zW3SO750qatewlBbI2GDScRV3VFS1jRA9UieRNt22as' \
+-H 'Cookie: refresh_token=b663a0ec-045c-48ca-a9fd-372ea6bdfec1' \
+-H 'Content-Length: 183' \
+-d '{"email": "1burkejustin@example.org", "fullName": "MichaelaBell", "password": "S%283'$ztA\\Z", "passwordRepeat": "S%283'$ztA\\Z", "roles": ["USER"], "verified": true, "banned": false}' 
+
+[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_login_user (setup)[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "1burkejustin@example.org", "password": "S%283'$ztA\\Z"}'
+[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_login_user[0m
+curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Content-Length: 66' \
+-d '{"email": "1burkejustin@example.org", "password": "S%283'$ztA\\Z"}'
+[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_login_user (teardown)[0m
+curl -X DELETE 'https://auth.dev-cinescope.f5qa.ru/user/bc615037-382a-4baf-b273-9b046643f0c1' \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmZjcyYjhiLTYwNzEtNDZhMy1iNmM1LWJmMmNjNWY3ODcxOCIsImVtYWlsIjoiYXBpMUBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iLCJTVVBFUl9BRE1JTiJdLCJ2ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzkxOTU4MDQzLCJleHAiOjE3OTE5NTk4NDN9.zW3SO750qatewlBbI2GDScRV3VFS1jRA9UieRNt22as' \
+-H 'Cookie: refresh_token=b663a0ec-045c-48ca-a9fd-372ea6bdfec1' \
+-H 'Content-Length: 0' \
