@@ -2,17 +2,23 @@ from typing import Any, Iterator
 
 import pytest
 import requests
+from playwright.sync_api import Playwright, Page
 from sqlalchemy.orm import Session
 
 from clients.api_manager import ApiManager
+from common.tools import Tools
 from constants.roles import Roles
 from data.movie_data import build_movie_payload
 from data.user_data import build_register_user_payload
 from db_requester.db_client import get_db_session
 from db_requester.db_helpers import DBHelper
 from entities.user import User
+from pages.register_page import CinescopeRegisterPage
 from resources.user_creds import SuperAdminCreds
 from utils.data_generator import DataGenerator
+
+
+DEFAULT_UI_TIMEOUT = 30000 # 30 sec
 
 
 # ACTORS
@@ -154,10 +160,12 @@ def db_session() -> Iterator[Session]:
     yield db_session
     db_session.close()
 
+
 @pytest.fixture(scope="function")
 def db_helper(db_session) -> DBHelper:
     db_helper = DBHelper(db_session)
     return db_helper
+
 
 @pytest.fixture(scope="function")
 def created_user(db_helper):
@@ -165,3 +173,36 @@ def created_user(db_helper):
     yield user
     if db_helper.get_user_by_id(user.id):
         db_helper.delete_user(user)
+
+
+@pytest.fixture(scope="session")
+def browser(playwright: Playwright):
+    browser = playwright.firefox.launch(headless=True) # False - для вывода браузера
+    yield browser
+    browser.close()
+
+
+@pytest.fixture(scope="function")
+def context(browser):
+    context = browser.new_context(ignore_https_errors=True)
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+    context.set_default_timeout(DEFAULT_UI_TIMEOUT)
+    yield context
+    log_name = f"trace_{Tools.get_timestamp()}.zip"
+    trace_path = Tools.files_dir('playwright_trace', log_name)
+    context.tracing.stop(path=trace_path)
+    context.close()
+
+
+@pytest.fixture(scope="function")
+def page(context):
+    page = context.new_page()
+    yield page
+    page.close()
+
+
+@pytest.fixture(scope="function")
+def register_page(page: Page) -> CinescopeRegisterPage:
+    register_page = CinescopeRegisterPage(page)
+    register_page.open()
+    return register_page

@@ -7,3 +7,4 @@ pydantic-core
 psycopg
 sqlalchemy
 allure-python-commons
+playwright
