@@ -13,6 +13,7 @@ from data.user_data import build_register_user_payload
 from db_requester.db_client import get_db_session
 from db_requester.db_helpers import DBHelper
 from entities.user import User
+from pages.login_page import CinescopeLoginPage
 from pages.register_page import CinescopeRegisterPage
 from resources.user_creds import SuperAdminCreds
 from utils.data_generator import DataGenerator
@@ -206,3 +207,10 @@ def register_page(page: Page) -> CinescopeRegisterPage:
     register_page = CinescopeRegisterPage(page)
     register_page.open()
     return register_page
+
+
+@pytest.fixture(scope="function")
+def login_page(page: Page) -> CinescopeLoginPage:
+    login_page = CinescopeLoginPage(page)
+    login_page.open()
+    return login_page
