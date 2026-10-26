@@ -21,20 +21,18 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_password(length: int = 12) -> str:
-        """Генерирует пароль, соответствующий regex API."""
-        if not 8 <= length <= 20:
-            raise ValueError("length must be between 8 and 20")
+        if not 10 <= length <= 20:
+            raise ValueError("length must be between 10 and 20")
 
         letters = string.ascii_letters
         digits = string.digits
-        specials = "?@#$%^&*_-+()[]{}><\\/|\"'.,:;"
 
         password = [
             random.choice(letters),
             random.choice(digits),
         ]
 
-        all_chars = letters + digits + specials
+        all_chars = letters + digits
         password.extend(random.choice(all_chars) for _ in range(length - 2))
 
         random.shuffle(password)
@@ -68,7 +66,7 @@ class DataGenerator:
             'password': DataGenerator.generate_random_password(),
             'created_at': datetime.datetime.now(),
             'updated_at': datetime.datetime.now(),
-            'verified': False,
+            'verified': True,
             'banned': False,
             'roles': [Roles.USER]
         }
@@ -87,3 +85,7 @@ class DataGenerator:
             'rating': random.randint(1, 5),
             'created_at': datetime.datetime.now(),
         }
+
+    @staticmethod
+    def generate_review_text(max_chars: int = 150) -> str:
+        return fake.text(max_nb_chars=max_chars).replace('\n', ' ')

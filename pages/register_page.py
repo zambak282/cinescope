@@ -6,7 +6,7 @@ from pages.base_page import BasePage
 class CinescopeRegisterPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        self.url = f"{self.home_url}register"
+        self.url = f"{self.home_url}/register"
 
         self.full_name_input = '[data-qa-id="register_full_name_input"]'
         self.email_input = '[data-qa-id="register_email_input"]'

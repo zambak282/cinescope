@@ -1,10 +1,15 @@
+import time
+
 from playwright.sync_api import Page
 
+from config.base_urls import BASE_URL
+from pages.base_page import BasePage
 
-class CinescopeLoginPage:
+
+class CinescopeLoginPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
-        self.url = "https://dev-cinescope.f5qa.ru/login"
+        super().__init__(page)
+        self.url = f"{self.home_url}/login"
 
         self.email_input = '[data-qa-id="login_email_input"]'
         self.password_input = '[data-qa-id="login_password_input"]'

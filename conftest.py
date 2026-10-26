@@ -13,6 +13,7 @@ from data.user_data import build_register_user_payload
 from db_requester.db_client import get_db_session
 from db_requester.db_helpers import DBHelper
 from entities.user import User
+from pages.film_page import CinescopeFilmPage
 from pages.login_page import CinescopeLoginPage
 from pages.register_page import CinescopeRegisterPage
 from resources.user_creds import SuperAdminCreds
@@ -171,6 +172,11 @@ def db_helper(db_session) -> DBHelper:
 @pytest.fixture(scope="function")
 def created_user(db_helper):
     user = db_helper.create_user(DataGenerator.generate_user_data())
+
+    print(f"\nnot db: {user.email}, {user.password}")
+    user1 = db_helper.get_user_by_email(user.email)
+    print(f"db: {user1.email}, {user1.password}")
+
     yield user
     if db_helper.get_user_by_id(user.id):
         db_helper.delete_user(user)
@@ -178,7 +184,7 @@ def created_user(db_helper):
 
 @pytest.fixture(scope="session")
 def browser(playwright: Playwright):
-    browser = playwright.firefox.launch(headless=True) # False - для вывода браузера
+    browser = playwright.firefox.launch(headless=False) # False - для вывода браузера
     yield browser
     browser.close()
 
@@ -214,3 +220,8 @@ def login_page(page: Page) -> CinescopeLoginPage:
     login_page = CinescopeLoginPage(page)
     login_page.open()
     return login_page
+
+
+@pytest.fixture(scope="function")
+def film_page(page: Page) -> CinescopeFilmPage:
+    return CinescopeFilmPage(page)
