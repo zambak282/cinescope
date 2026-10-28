@@ -15,14 +15,10 @@ pytestmark = pytest.mark.ui
 @allure.feature("Отзывы")
 class TestReview:
     @allure.title("Корректное создание отзыва")
-    def test_review(self, created_user, created_movie, login_page, film_page, page):
-        with allure.step("1. Логин супер админа через костыль"):
-            login_page.login(SuperAdminCreds.EMAIL, SuperAdminCreds.PASSWORD)
-            page.get_by_text("Все фильмы").click()
-
+    def register_login_and_test_review(self, created_user, created_movie, login_page, film_page, page):
+        with allure.step("1. Логин пользователя"):
+            login_page.login(created_user.email, created_user.password)
             page.wait_for_load_state("networkidle")
-            page.reload()
-
             expect(page.get_by_role("button", name="Профиль")).to_be_visible(timeout=10000)
 
         with allure.step("2. Открытие страницы созданного фильма"):

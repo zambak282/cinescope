@@ -171,15 +171,11 @@ def db_helper(db_session) -> DBHelper:
 
 @pytest.fixture(scope="function")
 def created_user(db_helper):
-    user = db_helper.create_user(DataGenerator.generate_user_data())
-
-    print(f"\nnot db: {user.email}, {user.password}")
-    user1 = db_helper.get_user_by_email(user.email)
-    print(f"db: {user1.email}, {user1.password}")
-
-    yield user
-    if db_helper.get_user_by_id(user.id):
-        db_helper.delete_user(user)
+    user_data = DataGenerator.generate_user_data()
+    created_user = db_helper.create_user(user_data)
+    yield created_user
+    if db_helper.get_user_by_id(created_user.id):
+        db_helper.delete_user(created_user)
 
 
 @pytest.fixture(scope="session")

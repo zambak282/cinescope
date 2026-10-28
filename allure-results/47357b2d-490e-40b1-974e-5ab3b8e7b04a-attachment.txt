@@ -1,6 +1,0 @@
-[32mpytest tests/api/test_auth_api.py::TestAuthApi::test_register_user[0m
-curl -X POST 'https://auth.dev-cinescope.f5qa.ru/register' \
--H 'Content-Type: application/json' \
--H 'Accept: application/json' \
--H 'Content-Length: 145' \
--d '{"email": "1hensonmary@example.com", "fullName": "StevenHolder", "password": "n'l4-%57ux[s", "passwordRepeat": "n'l4-%57ux[s", "roles": ["USER"]}'

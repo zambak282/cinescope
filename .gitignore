@@ -5,6 +5,7 @@
 /venv/
 __pycache__/
 files/
+allure-results/
 *.db
 *.xlsx
 *.log

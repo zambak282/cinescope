@@ -15,10 +15,5 @@ pytestmark = pytest.mark.ui
 class TestLogin:
     @allure.title("Успешный логин пользователя")
     def test_login(self, created_user, login_page, page):
-        login_page.login(SuperAdminCreds.EMAIL, SuperAdminCreds.PASSWORD)
-        page.get_by_text("Все фильмы").click()
-        time.sleep(2)
-
-        page.reload()
-
+        login_page.login(created_user.email, created_user.password)
         expect(page.get_by_role("button", name="Профиль")).to_be_visible(timeout=50000)

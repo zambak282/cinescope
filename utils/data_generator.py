@@ -17,7 +17,9 @@ class DataGenerator:
 
     @staticmethod
     def generate_random_email() -> str:
-        return f"1{fake.email()}"
+        random_email = fake.email()
+        local_part = random_email.split('@')[0]
+        return f"{local_part}@gmail.com"
 
     @staticmethod
     def generate_random_password(length: int = 12) -> str:
