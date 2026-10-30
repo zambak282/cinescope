@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 
@@ -23,3 +23,6 @@ class CinescopeRegisterPage(BasePage):
         self.enter_text(self.password_input, password)
         self.enter_text(self.repeat_password_input, password)
         self.click(self.submit_button)
+
+    def expect_email_confirmation_visible(self, timeout: int = 10000):
+        expect(self.page.get_by_text("Подтвердите свою почту")).to_be_visible(timeout=timeout)

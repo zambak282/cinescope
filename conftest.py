@@ -1,8 +1,9 @@
 from typing import Any, Iterator
 
+import allure
 import pytest
 import requests
-from playwright.sync_api import Playwright, Page
+from playwright.sync_api import Playwright, Page, expect
 from sqlalchemy.orm import Session
 
 from clients.api_manager import ApiManager
@@ -170,7 +171,7 @@ def db_helper(db_session) -> DBHelper:
 
 
 @pytest.fixture(scope="function")
-def created_user(db_helper):
+def created_user_db(db_helper):
     user_data = DataGenerator.generate_user_data()
     created_user = db_helper.create_user(user_data)
     yield created_user
@@ -221,3 +222,12 @@ def login_page(page: Page) -> CinescopeLoginPage:
 @pytest.fixture(scope="function")
 def film_page(page: Page) -> CinescopeFilmPage:
     return CinescopeFilmPage(page)
+
+
+@pytest.fixture(scope="function")
+def logged_in_user(common_user, login_page, page):
+    with allure.step(f"Логин пользователя с email: {common_user.email}"):
+        login_page.login(common_user.email, common_user.password)
+        page.wait_for_load_state("networkidle")
+        expect(page.get_by_role("button", name="Профиль")).to_be_visible(timeout=10000)
+    return common_user

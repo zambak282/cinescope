@@ -2,9 +2,7 @@ from random import randint
 
 import allure
 import pytest
-from playwright.sync_api import Page, expect
-
-from pages.register_page import CinescopeRegisterPage
+from playwright.sync_api import expect
 
 
 pytestmark = pytest.mark.ui

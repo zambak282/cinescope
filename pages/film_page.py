@@ -1,6 +1,6 @@
-from playwright.sync_api import Page
+import allure
+from playwright.sync_api import Page, expect
 
-from config.base_urls import BASE_URL
 from pages.base_page import BasePage
 
 
@@ -11,16 +11,24 @@ class CinescopeFilmPage(BasePage):
 
         self.review_input = '[data-qa-id="movie_review_input"]'
         self.review_submit_button = '[data-qa-id="movie_review_submit_button"]'
+        self.rating_combobox = page.get_by_role("combobox")
 
+    @allure.step("Переход на страницу фильма: {film_id}")
     def open_film(self, film_id: int):
-        self.page.goto(f"{self.url}/{film_id}")
+        self.open_url(f"{self.url}/{film_id}")
 
-    def write_review(self, text: str):
-        self.page.fill(self.review_input, text)
+    @allure.step("Проверка видимости отзыва с текстом: {review_text}")
+    def expect_review_visible(self, review_text: str, timeout: int = 10000):
+        expect(self.page.get_by_text(review_text)).to_be_visible(timeout=timeout)
 
-    def select_rating(self, rating: int):
-        self.page.get_by_role("combobox").click()
-        self.page.get_by_role("option", name=str(rating), exact=True).click()
+    def select_rating_value(self, rating: int):
+        return self.page.get_by_role("option", name=str(rating), exact=True)
 
-    def submit_review(self):
+    @allure.step("Написание отзыва с рейтингом: {rating} и текстом: {text}")
+    def leave_review(self, rating: int, text: str):
+        self.enter_text(self.review_input, text)
+
+        self.rating_combobox.click()
+        self.select_rating_value(rating).click()
+
         self.page.click(self.review_submit_button)
