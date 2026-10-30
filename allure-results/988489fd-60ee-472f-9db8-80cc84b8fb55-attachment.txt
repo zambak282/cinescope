@@ -1,6 +1,0 @@
-[32mpytest tests/db/test_user_db.py::test_db_requests (setup)[0m
-curl -X POST 'https://auth.dev-cinescope.f5qa.ru/login' \
--H 'Content-Type: application/json' \
--H 'Accept: application/json' \
--H 'Content-Length: 53' \
--d '{"email": "api1@gmail.com", "password": "asdqwe123Q"}'

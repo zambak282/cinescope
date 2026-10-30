@@ -1,8 +1,9 @@
 from typing import Any, Iterator
 
+import allure
 import pytest
 import requests
-from playwright.sync_api import Playwright, Page
+from playwright.sync_api import Playwright, Page, expect
 from sqlalchemy.orm import Session
 
 from clients.api_manager import ApiManager
@@ -13,6 +14,7 @@ from data.user_data import build_register_user_payload
 from db_requester.db_client import get_db_session
 from db_requester.db_helpers import DBHelper
 from entities.user import User
+from pages.film_page import CinescopeFilmPage
 from pages.login_page import CinescopeLoginPage
 from pages.register_page import CinescopeRegisterPage
 from resources.user_creds import SuperAdminCreds
@@ -169,16 +171,17 @@ def db_helper(db_session) -> DBHelper:
 
 
 @pytest.fixture(scope="function")
-def created_user(db_helper):
-    user = db_helper.create_user(DataGenerator.generate_user_data())
-    yield user
-    if db_helper.get_user_by_id(user.id):
-        db_helper.delete_user(user)
+def created_user_db(db_helper):
+    user_data = DataGenerator.generate_user_data()
+    created_user = db_helper.create_user(user_data)
+    yield created_user
+    if db_helper.get_user_by_id(created_user.id):
+        db_helper.delete_user(created_user)
 
 
 @pytest.fixture(scope="session")
 def browser(playwright: Playwright):
-    browser = playwright.firefox.launch(headless=True) # False - для вывода браузера
+    browser = playwright.firefox.launch(headless=False) # False - для вывода браузера
     yield browser
     browser.close()
 
@@ -214,3 +217,17 @@ def login_page(page: Page) -> CinescopeLoginPage:
     login_page = CinescopeLoginPage(page)
     login_page.open()
     return login_page
+
+
+@pytest.fixture(scope="function")
+def film_page(page: Page) -> CinescopeFilmPage:
+    return CinescopeFilmPage(page)
+
+
+@pytest.fixture(scope="function")
+def logged_in_user(common_user, login_page, page):
+    with allure.step(f"Логин пользователя с email: {common_user.email}"):
+        login_page.login(common_user.email, common_user.password)
+        page.wait_for_load_state("networkidle")
+        expect(page.get_by_role("button", name="Профиль")).to_be_visible(timeout=10000)
+    return common_user
